@@ -6,8 +6,8 @@ namespace UsuariosApi.Data;
 
 public class UsuarioDbContext : IdentityDbContext<Usuario>
 {
-    public UsuarioDbContext(DbContextOptions<UsuarioDbContext> opts) : base(opts) 
+    public UsuarioDbContext(DbContextOptions<UsuarioDbContext> opts) : base(opts)
     {
-        
+
     }
 }

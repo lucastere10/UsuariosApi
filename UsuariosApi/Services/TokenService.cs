@@ -9,18 +9,27 @@ namespace UsuariosApi.Services;
 
 public class TokenService
 {
+    private IConfiguration _configuration;
+
+    public TokenService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
     public string GenerateToken(Usuario usuario)
     {
+
         Claim[] claims = new Claim[]
         {
             new Claim("username", usuario.UserName),
             new Claim("id", usuario.Id),
-            new Claim(ClaimTypes.DateOfBirth, usuario.dataNascimento.ToString())
+            new Claim(ClaimTypes.DateOfBirth, usuario.dataNascimento.ToString()),
+            new Claim("loginTimeStamp", DateTime.UtcNow.ToString())
         };
 
-        var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("DU54D6A84DW84DAS24DAW8D41DW"));
+        var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]));
 
-        var signingCredentials = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);  
+        var signingCredentials = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
             expires: DateTime.Now.AddMinutes(60),
@@ -28,6 +37,6 @@ public class TokenService
             signingCredentials: signingCredentials
             );
 
-        return new JwtSecurityTokenHandler().WriteToken(token);   
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

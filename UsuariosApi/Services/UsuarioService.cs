@@ -33,7 +33,7 @@ public class UsuarioService
 
     internal async Task<string> Login(LoginUsuarioDto dto)
     {
-       var resultado = await _signInManager.PasswordSignInAsync(dto.Username, dto.Password, false, false);
+        var resultado = await _signInManager.PasswordSignInAsync(dto.Username, dto.Password, false, false);
 
         if (!resultado.Succeeded)
         {

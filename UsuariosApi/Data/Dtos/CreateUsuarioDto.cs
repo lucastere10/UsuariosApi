@@ -13,5 +13,5 @@ public class CreateUsuarioDto
     public string Password { get; set; }
     [Required]
     [Compare("Password")]
-    public string RePassword{ get; set; }
+    public string RePassword { get; set; }
 }
